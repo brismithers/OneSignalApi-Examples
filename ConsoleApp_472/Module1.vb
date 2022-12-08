@@ -16,9 +16,16 @@ Module Module1
                 "Subscribed Users"
             }}
 
+        Console.WriteLine("Request: " + notification.ToJson())
         Dim response = appInstance.CreateNotification(notification)
 
-        Console.WriteLine(response.ToJson())
+        If response IsNot Nothing Then
+            Console.WriteLine("Response: " + response.ToJson())
+        Else
+            Dim httpInfoResponse = appInstance.CreateNotificationWithHttpInfo(notification)
+            Console.WriteLine("Status:  " + httpInfoResponse.StatusCode.ToString())
+            Console.WriteLine("Content: " + httpInfoResponse.RawContent)
+        End If
     End Sub
 
 End Module
